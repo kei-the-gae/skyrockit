@@ -3,8 +3,13 @@ const router = express.Router();
 
 const User = require('../models/user.js');
 
-router.get('/', (req, res) => {
-    res.send('hello applications index route');
+router.get('/', async (req, res) => {
+    try {
+        res.render('applications/index.ejs');
+    } catch (err) {
+        console.log(err);
+        res.redirect('/');
+    };
 });
 
 module.exports = router;
