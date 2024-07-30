@@ -16,4 +16,16 @@ router.get('/new', async (req, res) => {
     res.render('applications/new.ejs');
 });
 
+router.post('/', async (req, res) => {
+    try {
+        const currentUser = await User.findbyId(req.session.user._id);
+        currentUser.applications.pus(req.body);
+        await currentUser.save();
+        res.redirect(`/users/${currentUser._id}/applications`);
+    } catch (err) {
+        console.log(err);
+        res.redirect('/');
+    };
+});
+
 module.exports = router;
